@@ -12,6 +12,22 @@ from sklearn.metrics import roc_auc_score
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
+def default_config(features):
+    config = {
+        'output_dim': 256,
+        'feature_dim': 4,
+        'dnn_hidden_layers': 4,
+        'dnn_hidden_dim': 128,
+        'dnn_l2_reg': 0, 
+        'dnn_dropout_rate': 0,
+        'cin_hidden_layers': [5, 5],
+        'feature_num': len(features),
+        'cin_input_dim': (len(features), 4),
+        'l2_reg_dnn': 0
+    }
+    return config
+
+
 def auc_score(y_true, y_pred):
     return roc_auc_score(y_true, y_pred)
 
@@ -66,7 +82,7 @@ def train(model, data_loader, optimizer):
     return total_loss, auc
 
 
-def evaluate(model, data_loader, optimizer):
+def evaluate(model, data_loader):
     model.eval()
     total_loss = 0.
     outputs = []
@@ -95,7 +111,7 @@ def train_model(model, optimizer, epochs=10):
         train_auc.append(t_auc)
         train_loss.append(t_loss)
 
-        e_loss, e_auc = evaluate(model, test_loader, optimizer)
+        e_loss, e_auc = evaluate(model, test_loader)
         val_auc.append(e_auc)
         val_loss.append(e_loss)
         

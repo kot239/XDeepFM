@@ -1,13 +1,14 @@
 import torch
 import torch.nn as nn
 from ..layers import CIN
+from ..utils import default_config
 
 
 class CinModel(nn.Module):
-    def __init__(self):
+    def __init__(self, features):
         super(CinModel, self).__init__()
         
-        config = default_config()
+        config = default_config(features)
 
         self.feat_size = config['feature_num']
         self.emb_size = config['feature_dim']

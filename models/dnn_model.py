@@ -1,12 +1,13 @@
 import torch
 import torch.nn as nn
 from ..layers import DNN
+from ..utils import default_config
 
 class DnnModel(nn.Module):
-    def __init__(self):
+    def __init__(self, features):
         super(DnnModel, self).__init__()
 
-        config = default_config()
+        config = default_config(features)
         config['input_dim'] = config['feature_num'] * config['feature_dim']
 
         self.decr_dim = []

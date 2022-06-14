@@ -1,12 +1,13 @@
 import torch
 import torch.nn as nn
 from ..layers import CIN, DNN
+from ..utils import default_config
 
 class XDeepFMModel(nn.Module):
-    def __init__(self):
+    def __init__(self, features):
         super(XDeepFMModel, self).__init__()    
 
-        self.config = default_config()
+        self.config = default_config(features)
         
         self.config['input_dim'] = self.config['feature_num'] * self.config['feature_dim']
 
